@@ -1,0 +1,30 @@
+---
+version: "3"
+
+services:
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - 8000:80
+    restart: always
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
+    volumes:
+      - "./src:/var/www/html"
+  db:
+    image: mariadb:latest
+    command: mysqld
+    environment:
+      - MYSQL_ROOT_PASSWORD=my-secret-pw
+    ports:
+      - 8001:3306
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 8002:80
+    environment:
+      - PMA_ARBITRARY=1
